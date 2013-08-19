@@ -1,50 +1,55 @@
 defmodule ListProblems do
 
+  # 1.01
   def last([]), do: nil
   def last([h]), do: h
   def last([_|t]), do: last(t)
-
+  
+  # 1.02
   def last_but_one([]), do: nil
   def last_but_one([_]), do: nil
   def last_but_one([h,_]), do: h
   def last_but_one([_|t]), do: last_but_one(t)
 
+  # 1.03
   def element_at([], _), do: nil
   def element_at([ h | _ ], 0), do: h
   def element_at([ _ | t ], k) when k > 0, do: element_at(t, k-1)
 
+  # 1.04
   def length_([]), do: 0
   def length_([ _ | t ]), do: 1 + length_(t)
 
+  # 1.05
   def reverse(list), do: Enum.reduce(list, [], [ &1 | &2 ])
 
+  # 1.06
   def palindrome(list), do: list == reverse(list)
 
+  # 1.07
   def flatten([]), do: []
   def flatten([[h | t] | tt]), do: flatten(flatten([h | t]) ++ tt)
   def flatten([h | t]), do: [h | flatten(t)]
 
+  # 1.08
   def compress(list), do: compress([], list)
   def compress(res, []), do: reverse(res)
   def compress([x | t1], [x| t2]), do: compress([x | t1], t2)
   def compress(res, [h|t]), do: compress([h | res], t)
 
+  # 1.09
   def pack(list), do: pack([], list)
   def pack(res, []), do: reverse(res)
   def pack([[x | t1] | t2], [x | t3]), do: pack([[ x | [x | t1]] | t2 ], t3)
   def pack(res, [h | t]), do: pack([[h] | res], t)
 
-  @doc """
-  1.10
-  """
+  # 1.10
   def encode(list) do
     pack(list) |>
     Enum.map(&{length(&1), element_at(&1, 0)})
   end
 
-  @doc """
-  1.11
-  """
+  # 1.11
   def encode_mod(list) do
     pack(list) |>
     Enum.map(fn [h | t] -> if t == [] do
@@ -55,9 +60,7 @@ defmodule ListProblems do
     end)
   end
   
-  @doc """
-  1.12: decode an list encoded by encode_mod/1 or encode_direct/1
-  """
+  # 1.12: decode an list encoded by encode_mod/1 or encode_direct/1
   def decode(list), do: Enum.map(list, &_decomp/1) |> _flatten([])
     def _decomp({n, x}) when n > 1, do: duplicate(x, n)
     def _decomp(x), do: x
