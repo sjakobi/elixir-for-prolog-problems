@@ -60,7 +60,7 @@ defmodule ListProblems do
     end)
   end
   
-  # 1.12: decode an list encoded by encode_mod/1 or encode_direct/1
+  # 1.12: decode a list encoded by encode_mod/1 or encode_direct/1
   def decode(list), do: Enum.map(list, &_decomp/1) |> _flatten([])
     def _decomp({n, x}) when n > 1, do: duplicate(x, n)
     def _decomp(x), do: x
@@ -70,6 +70,23 @@ defmodule ListProblems do
     def _flatten([[h|t1] | t2], res), do: _flatten([t1 | t2], [h | res])
     def _flatten([h | t], res), do: _flatten(t, [h | res])
 
+  # alternative version
+  def decode_2(list) do
+    list |>
+    Enum.map(&decomp/1) |>
+    concat
+  end
+
+  defp decomp({n, x})
+  when is_integer(n) and n > 1 do
+    duplicate(x, n)
+  end
+
+  defp decomp(x), do: [x]
+
+  def concat(list) do
+    Enum.reduce(list, [], fn(entry, acc) -> acc ++ entry end)
+  end
 
   # 1.13
   def encode_direct(list), do: encode_direct([], list)
