@@ -20,4 +20,19 @@ defmodule ArithmeticProblems do
     end
   end
 
+  # 2.02
+  # primitive yet working
+  def prime_factors(n) when is_integer(n) and n > 0 do
+    do_prime_factors(n, 2, [])
+  end
+
+  defp do_prime_factors(1, _, factors), do: Enum.reverse(factors)
+  defp do_prime_factors(n, c, factors) do
+    if rem(n, c) == 0 do
+      do_prime_factors(div(n, c), c, [c | factors])
+    else
+      do_prime_factors(n, c+1, factors)
+    end
+  end
+
 end
