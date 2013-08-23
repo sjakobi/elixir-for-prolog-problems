@@ -6,5 +6,6 @@ ToDos
 - Consistent style for lists and tuples
 
 - explain differences to prolog in README
+
   - tuples instead of lists in results
   - 0-based indexing
