@@ -1,0 +1,10 @@
+ToDos
+#####
+
+- Helper functions should be private and consistently named
+- A better solution for 1.06
+- Consistent style for lists and tuples
+
+- explain differences to prolog in README
+  - tuples instead of lists in results
+  - 0-based indexing
