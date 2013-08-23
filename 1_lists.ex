@@ -105,11 +105,56 @@ defmodule ListProblems do
   
   # 1.16
   def drop(list, n) when is_integer(n) and n > 0, do: drop(list, n, n, [])
+
   defp drop([], _n, _cur, res), do: reverse(res)
-  defp drop([h | t], n, 1, res), do: drop(t, n, n, res)
+  defp drop([_ | t], n, 1, res), do: drop(t, n, n, res)
   defp drop([h | t], n, cur, res), do: drop(t, n,  cur-1, [h | res])
 
+  # 1.17
+  def split(list, n) when is_integer(n), do: do_split(list, n, [])
+
+  defp do_split(list, n, res) when n < 0 do
+    do_split(list, length_(list) + n, res)
+  end
+
+  defp do_split(list, 0, res), do: { reverse(res), list }
+  defp do_split([], _, res), do: { reverse(res), [] }
+  defp do_split([h | t], n, res), do: do_split(t, n-1, [h | res])
+
+  # 1.18
+  def slice(list, start, stop)
+      when is_integer(start) and is_integer(stop) and start > 0 and start <= stop do
+    do_slice(list, start, stop, [])
+  end
+
+  defp do_slice(_, _, 0, res), do: reverse(res)
+  defp do_slice([], _, _, res), do: reverse(res)
+  defp do_slice([h|t], 1, stop, res), do: do_slice(t, 1, stop-1, [h|res])
+  defp do_slice([_|t], start, stop, res), do: do_slice(t, start-1, stop-1, res)
+  
+  # 1.19
+  def rotate(list, n) when is_integer(n) do 
+    { a, b } = split(list, n)
+    b ++ a
+  end
+
+  # 1.20
+  def remove_at(list, n) when is_integer(n) and n >= 0 do
+    { a, [x|b] } = split(list, n)
+    { x, a ++ b }
+  end
+  
+  # 1.21
+  def insert_at(elem, list, n) when is_integer(n) do
+    { a, b } = split(list, n)
+    a ++ [elem | b]
+  end
+  
+  # 1.22
+  # the easy way
+  def range(start, stop), do: start..stop |> Enum.to_list
+
   def duplicate(x, n) when n >= 0 and is_integer(n), do: duplicate(x, n, [])
-  def duplicate(x, 0, res), do: res
+  def duplicate(_, 0, res), do: res
   def duplicate(x, n, res), do: duplicate(x, n-1, [x | res])
 end
