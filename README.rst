@@ -1,5 +1,5 @@
 Elixir solutions for Werner Hett's Prolog Problems
-##################################################
+--------------------------------------------------
 
 This repository contains solutions for the popular
 `Prolog Problems <https://sites.google.com/site/prologsite/prolog-problems>` by
